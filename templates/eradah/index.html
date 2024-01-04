@@ -1,0 +1,85 @@
+
+
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Responsive Layout</title>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+</head>
+<body>
+    <div class="container">
+        <! -- header section -->
+        <header class="navbar">
+            <nav>
+                <ul>
+                    <li><a href="{% url 'track' %}">Home</a></li>
+                    {% if user.is_authenticated %}
+                        <li><a href="{% url 'create_order' %}">Create New Order</a></li>
+                        <li><a href="{% url 'update_order_status' %}">Update Order</a></li>
+                        <li><a href="{% url 'logout' %}">Logout</a></li> <!-- Logout link -->
+                    {% else %}
+                        <li><a href="{% url 'login_view' %}">Login</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <!-- rest of your header -->
+        
+            
+            <h1>مشاريع اصحاب الارادة المتحدة ش م م</h1> 
+            <img src="{% static 'imgs/logo.jpeg' %}" alt="My image" style="width:100px;height:100px;">
+        
+        </header>
+ 
+        <! -- body 3 sections and footer-->
+        <main class="main">
+            <section class="content">
+                <p>يرجى إدخال رقم التتبع أو رقم الهاتف المرتبط بشحنتك للاطلاع على حالتها وتفاصيل التوصيل</p>
+                <form action="{% url 'track_order' %}" method="get">
+                    <input type="text" name="tracking_number" placeholder="Enter Tracking Number or Phone Number">
+                    <button type="submit">Track</button>
+                </form>
+            </section>
+            <section class="content">
+                <h2>موعد الحاوية القادم</h2>
+                <p>{{ container_launch.launch_date }}</p>
+                <h2>اخر تحديثات الاسعار للمتر المربع</h2>
+                <table>
+                    <tr>
+                    <th>CBM</th>
+                    <th>Price (OMR)</th>
+                    </tr>
+                    {% for rate in shipping_rates %}
+                    <tr>
+                        <td>{{ rate.cbm }}</td>
+                        <td>{{ rate.price }}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </section>
+            <section class="content">
+
+                <h1>للتواصل </h1> 
+                <h3>90625559 إسماعيل الكندي</h3>
+                <h3>99626627 يحيى الكندي</h3>
+                <h3>72023133 منير الكندي</h3>
+                    
+                    
+                    
+                
+                <p>نقدم ايضا خدمة <b> البيع بالتجزئة</b> و <b> تشطيبات المطابخ</b> زرنا على الانستجرام </p> <a target="" href="https://www.instagram.com/reel/Cqs1YutrpD-/?igsh=MTR1dm15MjVocDdzcQ%3D%3D">
+                    <img src="{% static 'imgs/inst.jpg' %}" alt="inst" style="width:30px;height:30px;" /></a>
+                
+
+                    
+            </section>
+        </main>
+        <footer class="footer">
+
+
+        </footer>
+    </div>
+</body>
+</html>

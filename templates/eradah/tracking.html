@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Tracking</title>
+  <link rel="stylesheet" href="{% static 'css/style.css' %}"> <!-- Make sure this path is correct -->
+</head>
+
+<body>
+
+  <h1>Track Your Order</h1>
+<form action="{% url 'track_order' %}" method="get">
+    {{ form.as_p }}
+    <input type="submit" value="Track">
+</form>
+
+{% if orders %}
+    {% for order in orders %}
+    <div>
+        <h2>Order Details</h2>
+        <p><strong>Order Number:</strong> {{ order.order_reference_number }}</p>
+        <p><strong>Customer Name:</strong> {{ order.customer_name }}</p>
+        <p><strong>Order Status:</strong> {{ order.get_order_status_display }}</p>
+        <p><strong>Last Updated:</strong> {{ order.status_updates.last.update_date }}</p>
+        <!-- You can add more details here as needed -->
+    </div>
+    {% endfor %}
+{% elif request.GET.tracking_number %}
+    <p>No order found for the provided tracking number or phone number.</p>
+{% endif %}
+</body>

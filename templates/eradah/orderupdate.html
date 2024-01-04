@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Order Status</title>
+    <link rel="stylesheet" href="{% static 'css/updateorder.css' %}">
+</head>
+<body>
+    <h1>تحديث حالة الطلب</h1>
+
+    <form method="get" class="search-form">
+        {{ search_form.as_p }}
+        <input type="submit" value="Search Order">
+    </form>
+
+    {% if order %}
+        <div class="order-details">
+            <h2>Order Details</h2>
+            <p><strong>Customer Name:</strong> {{ order.customer_name }}</p>
+            <p><strong>Last Status Update:</strong> {{ order.order_status }}</p>
+
+            <form method="post" class="status-form">
+                {% csrf_token %}
+                {{ status_form.as_p }}
+                <button type="submit" name="update_status">Update Status</button>
+            </form>
+        </div>
+    {% endif %}
+</body>
+</html>
